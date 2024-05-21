@@ -58,6 +58,7 @@ export function WeatherProvider({ children }: { children: any }) {
     }
   };
 
+  //init
   useEffect(() => {
     updateWeatherData();
   }, []);

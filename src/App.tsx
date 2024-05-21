@@ -1,20 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import WeatherDashboard from './components/WeatherDashboard'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import WeatherDashboard from "./components/WeatherDashboard";
+import { WeatherProvider } from "./components/WeatherContext";
+import MenuBar from "./components/MenuBar";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   function meth() {
-    setCount((count) => count + 1)
+    setCount((count) => count + 1);
+    console.log("SFSF");
   }
 
   return (
-    <>
+    <WeatherProvider>
+      <MenuBar/>
       <div>
-        <WeatherDashboard/>
+        <WeatherDashboard />
       </div>
       <div>
         <a href="https://vitejs.dev" target="_blank">
@@ -26,9 +30,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={meth}>
-          count is {count}
-        </button>
+        <button onClick={meth}>count is {count}</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -36,8 +38,8 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
-  )
+    </WeatherProvider>
+  );
 }
 
-export default App
+export default App;

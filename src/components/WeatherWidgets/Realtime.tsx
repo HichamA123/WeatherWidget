@@ -1,4 +1,3 @@
-// src/components/WeatherWidget.tsx
 import { useEffect } from "react";
 import { validVariable } from "../../utils";
 import { useWeatherContext } from "../WeatherContext";

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { WeatherProvider } from "./WeatherContext";
 import Realtime from "./WeatherWidgets/Realtime";
 import XDayForecast from "./WeatherWidgets/XDayForecast";
 
@@ -11,13 +10,11 @@ function WeatherDashboard() {
   }, []);
 
   return (
-    <WeatherProvider>
       <div>
         <Realtime />
         {/* <WeatherWidget location='amsterdam' timesteps={TimeStep.OneHour} /> */}
         <XDayForecast />;
       </div>
-    </WeatherProvider>
   );
 }
 
