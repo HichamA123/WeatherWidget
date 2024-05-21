@@ -1,51 +1,67 @@
 // src/components/WeatherWidget.tsx
-import { useEffect, useState } from "react";
-import getWeather, { WeatherData } from "../services/weatherService";
+import { useEffect } from "react";
+import { validVariable } from "../utils";
+import XDayForecast from "./XDayForecast";
+import { useWeatherContext } from "./WeatherContext";
+import { TimeStep } from "../services/weatherService";
 
 interface WeatherWidgetProps {
-  lat: number;
-  lon: number;
+  location: string;
+  timesteps: TimeStep;
 }
 
-function WeatherWidget({ lat, lon }: WeatherWidgetProps) {
-  const [weatherData, setWeatherData] = useState<WeatherData[]>([]);
-  const [loading, setLoading] = useState(true);
+// Creates a specifc block of weatherinformation based on timesteps ('1d', '1h', 'realtime')
+// This is a generic Weather Widget. it creates react component instance based on the timestep so there is conditional rendering.
+function WeatherWidget({ location, timesteps }: WeatherWidgetProps) {
+
+  const { hourlyData, realTimeData, loading } = useWeatherContext();
 
   useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const data = await getWeather({ lat, lon }); // New York coordinates
-        
-        setWeatherData(data);
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchWeather();
-  }, [lat, lon]);
+  }, []);
 
-  if (loading) {
+  if (loading || !validVariable(hourlyData) || !validVariable(realTimeData)) {
     return <div>Loading...</div>;
   }
 
-  return (
-    <div>
-      <h1>5-Day Weather Forecast</h1>
-      <ul>
-        {weatherData.map((day) => (
-          <li key={day.time}>
-            <p>Date: {new Date(day.time).toDateString()}</p>
-            <p>Average Temperature: {day.values.temperatureAvg}°C</p>
-            <p>Precipitation Probability: {day.values.precipitationProbabilityAvg}%</p>
-            <p>Average Wind Speed: {day.values.windSpeedAvg} m/s</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  switch (timesteps) {
+    case TimeStep.OneDay:
+      // Render daily weather information
+      return <XDayForecast data={hourlyData} loading={loading} />;
+
+    case TimeStep.OneHour:
+      // Render hourly weather information
+      return <></>;
+
+    case TimeStep.Realtime:
+      // Render real-time weather information
+      return (
+        <div>
+          <h1>5-Day Weather Forecast</h1>
+          <ul>
+            {realTimeData && (
+              (() => {
+                console.log(realTimeData);
+                return (
+                  <li key={realTimeData.time}>
+                    <p>Date: {new Date(realTimeData.time).toDateString()}</p>
+                    <p>Average Temperature: {realTimeData.values.temperatureAvg}°C</p>
+                    <p>
+                      Precipitation Probability: {realTimeData.values.precipitationProbabilityAvg}%
+                    </p>
+                    <p>Average Wind Speed: {realTimeData.values.windSpeedAvg} m/s</p>
+                  </li>
+                );
+              })()
+            )}
+          </ul>
+        </div>
+      );
+
+      
+    default:
+      return <div>timelines is not set...</div>;
+  }
 }
 
 export default WeatherWidget;
