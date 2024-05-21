@@ -1,21 +1,18 @@
 import { useEffect } from "react";
-import { WeatherData } from "../services/weatherService";
-import { validVariable } from "../utils";
+import { validVariable } from "../../utils";
+import { useWeatherContext } from "../WeatherContext";
 
-interface XDayForecastProps {
-    data: WeatherData[];
-    loading: Boolean;
-  }
+interface XDayForecastProps {}
 
 //   {data, loading}: {data: WeatherData[], loading: Boolean}
-function XDayForecast({data, loading}: XDayForecastProps) {
+function XDayForecast({}: XDayForecastProps) {
+  const {dailyData, hourlyData, realTimeData, location, loading } = useWeatherContext();
 
   useEffect(() => {
-    if (!validVariable(data)) return;
+    console.log("the data: ", dailyData);
+  }, [dailyData]);
 
-  }, [data]);
-
-  if (loading) {
+  if (loading || !validVariable(dailyData) || !validVariable(realTimeData)) {
     return <div>Loading...</div>;
   }
 
@@ -23,7 +20,8 @@ function XDayForecast({data, loading}: XDayForecastProps) {
     <div>
       <h1>5-Day Weather Forecast</h1>
       <ul>
-        {data.map((day) => (
+        {dailyData.map((day: any) => {
+          return (
           <li key={day.time}>
             <p>Date: {new Date(day.time).toDateString()}</p>
             <p>Average Temperature: {day.values.temperatureAvg}°C</p>
@@ -33,7 +31,7 @@ function XDayForecast({data, loading}: XDayForecastProps) {
             </p>
             <p>Average Wind Speed: {day.values.windSpeedAvg} m/s</p>
           </li>
-        ))}
+        )})}
       </ul>
     </div>
   );
