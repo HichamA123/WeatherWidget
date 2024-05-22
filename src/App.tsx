@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import WeatherDashboard from "./components/WeatherDashboard";
 import { WeatherProvider } from "./components/WeatherContext";
-import MenuBar from "./components/MenuBar";
+import MenuBar from "./components/MenuBar/MenuBar";
 
 function App() {
   const [count, setCount] = useState(0);
