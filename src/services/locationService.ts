@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyAlRybBXuqp8NrMNUG_0YivMl8RQchW4gc";
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export async function getLocation(location?: string, lat?: number, lng?: number): Promise<any> {
   return new Promise(async (resolve, reject) => {

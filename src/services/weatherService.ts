@@ -2,7 +2,7 @@
 import axios from "axios";
 import {getForecastDailyData, getForecastHourlyData, getRealtimeData} from "./data";
 
-const API_KEY = "3jCDvJabQ7rYNPMPw7yRaVYmYr0hKlLs";
+const API_KEY = import.meta.env.VITE_TOMORROWIO_API_KEY;
 const BASE_URL = "https://api.tomorrow.io/v4/weather/forecast";
 
 export enum TimeStep {
