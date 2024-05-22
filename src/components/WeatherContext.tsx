@@ -132,8 +132,8 @@ export function WeatherProvider({ children }: { children: any }) {
 
     if (lastCalledFromCookie) {
       setLastCalled(parseInt(lastCalledFromCookie));
-    } else { //only if no lastcalled cookie, call the updateWeatherData
-      // bcs the setlocation and setlastcalled are async, tthe updateweatherdata below will not have the latest data, so 2nd useffect is used below
+    } else { //only if no lastcalled cookie, to prevent double calling method
+      // bcs the setlocation and setlastcalled are async, the method below will not have the latest data, so 2nd useffect is used below
       updateWeatherData();
 
     }
@@ -141,7 +141,7 @@ export function WeatherProvider({ children }: { children: any }) {
   }, []);
 
 
-  // Call updateWeatherData when lastCalled is updated or when location is updated
+  // Call when lastCalled is updated or when location is updated
   useEffect(() => {
     if (lastCalled !== null) {
       updateWeatherData();

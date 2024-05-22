@@ -1,7 +1,4 @@
-import {
-    IconButton,
-    useToast,
-} from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
 import { BiRefresh } from "react-icons/bi";
 import { useWeatherContext } from "../WeatherContext";
 import { useState } from "react";
@@ -11,9 +8,8 @@ interface RefreshProps {
 }
 
 export default function Refresh({ isApiOverloaded }: RefreshProps) {
-    const { location, loading, updateWeatherData, updateLoading } = useWeatherContext();
+    const { loading, updateWeatherData, updateLoading } = useWeatherContext();
     const [isLocalLoading, setIsLocalLoading] = useState(false); // used for setting to loading feature of button
-    const toast = useToast();
 
     async function click() {
         if (isApiOverloaded()) return;
