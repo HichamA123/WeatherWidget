@@ -22,23 +22,9 @@ export default function Refresh({ isApiOverloaded }: RefreshProps) {
 
         try {
             await updateWeatherData();
-            toast({
-                title: "Updated weather data",
-                description: `Location: ${location.address}`,
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-              });
         } catch (error) {
             // catches any errors from the axios call
             console.error(error);
-            toast({
-                title: "Updating weather data failed",
-                description: "Please contact customer support (hicham)",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-              });
         } finally {
             updateLoading(false);
             setIsLocalLoading(false);

@@ -16,13 +16,8 @@ import Search from "./Search";
 import Refresh from "./Refresh";
 import MyLocation from "./MyLocation";
 
-
-//TODO
-//toast for pressing on location to fetch current location (save in cookies)
-//modal on limit reached or problem with fetching data. or no internet. also
-
 export default function MenuBar() {
-  const { lastCalled, updateLocation, updateWeatherData, updateLoading } = useWeatherContext();
+  const { lastCalled, updateLocation, updateLoading } = useWeatherContext();
   const toast = useToast();
 
   //checks if location is valid, if so place it in the central context and update weather data
@@ -30,8 +25,8 @@ export default function MenuBar() {
 
     if (isApiOverloaded()) return false;
 
-    //quick check if valid input
-    if (!location && (latitude == undefined || longitude == undefined)) {
+    //quick check if atleast 1 param is given
+    if (!searchInput && (latitude == undefined || longitude == undefined)) {
       console.error('Either location or both lat and lng must be provided');
       return false;
     }
@@ -80,16 +75,6 @@ export default function MenuBar() {
         lng: location.geometry.location.lng,
       });
 
-      await updateWeatherData();
-      
-      toast({
-        title: "Updated weather data",
-        description: `Location: ${location.formatted_address}`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
-
       return true;
     } catch (error) {
       // catches any errors from the axios call or when processing the location data in this function
@@ -111,7 +96,7 @@ export default function MenuBar() {
 
   function isApiOverloaded() {
     //safety prevention for hitting the tomorrow.io api limit
-    if (lastCalled && !minMinutesPast(lastCalled, 3)) {
+    if (lastCalled && !minMinutesPast(lastCalled)) {
       // 3 minutes have not passed yet
       const now = Date.now();
       const timePassed = now - lastCalled;

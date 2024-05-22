@@ -43,8 +43,7 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
     setIsLocalLoading(true);
 
     const validLocation = await validateLocation(searchInput);
-    if (validLocation) setSearchInput(location.address);
-    else setSearchInput("");
+    if (!validLocation) setSearchInput("");
 
     setIsLocalLoading(false);
   }
@@ -78,6 +77,7 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
         Last updated:{" "}
         {lastCalled ? new Date(lastCalled).toLocaleTimeString() : "Never"}
       </p>
+      <p>{location.address}</p>
       <InputGroup>
         <InputLeftElement pointerEvents="none">
           <Icon as={BiMap} color="gray.300" boxSize={5} />

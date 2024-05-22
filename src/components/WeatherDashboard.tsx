@@ -3,7 +3,7 @@ import Realtime from "./WeatherWidgets/Realtime";
 import XDayForecast from "./WeatherWidgets/XDayForecast";
 
 function WeatherDashboard() {
-//   const { weatherData, loading, updateWeatherData } = useWeatherContext();
+//   const { weatherData, loading } = useWeatherContext();
 
   useEffect(() => {
 
