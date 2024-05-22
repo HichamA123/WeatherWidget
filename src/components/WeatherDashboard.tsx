@@ -11,9 +11,9 @@ function WeatherDashboard() {
 
   return (
       <div>
-        <Realtime />
+        {/* <Realtime /> */}
         {/* <WeatherWidget location='amsterdam' timesteps={TimeStep.OneHour} /> */}
-        <XDayForecast />;
+        {/* <XDayForecast />; */}
       </div>
   );
 }

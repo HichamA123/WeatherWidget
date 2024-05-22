@@ -81,8 +81,8 @@ function getParams(location : string, timesteps : TimeStep) {
   };
 }
 
-export default async function getWeather(location : string, timesteps : TimeStep): Promise<WeatherData[] | WeatherData> {
-  const params = getParams(location, timesteps);
+export default async function getWeather(location : LocationData, timesteps : TimeStep): Promise<WeatherData[] | WeatherData> {
+  const params = getParams(`${location.lat}, ${location.lng}`, timesteps);
 
   //TODO use this again
   // const response = await axios.get<DailyWeatherResponse>(BASE_URL, { params });
@@ -122,4 +122,10 @@ export interface WeatherData {
     precipitationProbability?: number;
     windSpeed?: number;
   };
+}
+
+export interface LocationData {
+  address: string; // NOTE: do not use address for fetching tomorrow api data. only lat and lng
+  lat: number;
+  lng: number;
 }
