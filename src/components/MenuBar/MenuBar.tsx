@@ -18,7 +18,6 @@ import MyLocation from "./MyLocation";
 
 
 //TODO
-//toast for reload and enter on search of location
 //toast for pressing on location to fetch current location (save in cookies)
 //modal on limit reached or problem with fetching data. or no internet. also
 
@@ -28,6 +27,8 @@ export default function MenuBar() {
 
   //checks if location is valid, if so place it in the central context and update weather data
   async function validateLocation(searchInput?: string, latitude?: number, longitude?: number) {
+
+    if (isApiOverloaded()) return false;
 
     //quick check if valid input
     if (!location && (latitude == undefined || longitude == undefined)) {
@@ -80,6 +81,14 @@ export default function MenuBar() {
       });
 
       await updateWeatherData();
+      
+      toast({
+        title: "Updated weather data",
+        description: `Location: ${location.formatted_address}`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
 
       return true;
     } catch (error) {
