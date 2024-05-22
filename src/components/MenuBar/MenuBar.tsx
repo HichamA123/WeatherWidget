@@ -10,7 +10,7 @@ import { Icon } from "@chakra-ui/react";
 import { BiAccessibility } from "react-icons/bi";
 import { useWeatherContext } from "../WeatherContext";
 import { } from "react";
-import { minMinutesPast } from "../../utils";
+import { timeoutIsDone, TIMEOUT_MINUTES } from "../../utils";
 import { getLocation } from "../../services/locationService";
 import Search from "./Search";
 import Refresh from "./Refresh";
@@ -96,11 +96,11 @@ export default function MenuBar() {
 
   function isApiOverloaded() {
     //safety prevention for hitting the tomorrow.io api limit
-    if (lastCalled && !minMinutesPast(lastCalled)) {
-      // 3 minutes have not passed yet
+    if (lastCalled && !timeoutIsDone(lastCalled)) {
+      // TIMEOUT_MINUTES minutes have not passed yet
       const now = Date.now();
       const timePassed = now - lastCalled;
-      const remainingTime = 3 * 60 * 1000 - timePassed;
+      const remainingTime = TIMEOUT_MINUTES * 60 * 1000 - timePassed;
       const remainingMinutes = Math.floor(remainingTime / (1000 * 60));
       const remainingSeconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 

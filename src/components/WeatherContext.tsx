@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState, useContext } from "react";
 import getWeather, { WeatherData, TimeStep, LocationData } from "../services/weatherService";
 import Cookies from "js-cookie";
-import { minMinutesPast } from "../utils";
+import { timeoutIsDone } from "../utils";
 import { useToast } from "@chakra-ui/react";
 
 interface WeatherContextType {
@@ -46,7 +46,7 @@ export function WeatherProvider({ children }: { children: any }) {
 
     return new Promise<void>(async (resolve, reject) => {
       //manual safety feature to prevent hitting limit too fast (bcs vite HMR spams the api)
-      if (lastCalled && !minMinutesPast(lastCalled)) {
+      if (lastCalled && !timeoutIsDone(lastCalled)) {
         setTimeout(() => {
           setLoading(false);
           resolve();

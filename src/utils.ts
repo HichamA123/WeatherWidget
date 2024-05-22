@@ -8,7 +8,9 @@ export function validVariable(variable : any): boolean {
   }
 }
 
-export function minMinutesPast(lastCalled : number, minutes : number = 3): boolean {
+export const TIMEOUT_MINUTES: number = 3;
+
+export function timeoutIsDone(lastCalled : number, minutes : number = TIMEOUT_MINUTES): boolean {
   const now = Date.now();
   if (lastCalled == null || now - lastCalled >= minutes * 60 * 1000) { // if timedifference is bigger than the minimum past minutes
     return true;
