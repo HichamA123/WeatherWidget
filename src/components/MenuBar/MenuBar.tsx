@@ -122,10 +122,10 @@ export default function MenuBar() {
   }
 
   return (
-    <Flex w='99%' borderWidth='1px' borderRadius='lg' mt='2' p='3'  alignItems='center' gap='5'>
+    <Flex w='99%'  borderColor={'white'} borderRadius='lg' mt='2' p='3'  alignItems='center' gap='5' className="navbar">
       <Flex p='2' flexDirection='row' justifyContent='center' alignItems='center'>
         <Icon as={BiLemon} boxSize={7} mr={3} />
-        <Heading size='md'>MyWeather</Heading>
+        <Heading size='md'>LemonWeather</Heading>
       </Flex>
       <Spacer />
       <Search isApiOverloaded={isApiOverloaded} validateLocation={validateLocation} />

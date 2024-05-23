@@ -1,10 +1,19 @@
-/* #root { */
+#root {
   /* max-width: 1280px; */
   /* margin: 0 auto; */
   /* padding: 2rem; */
-  /* text-align: center;
+  /* text-align: center; */
+  /* background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+  /* background-image: linear-gradient(-225deg, #7085B6 0%, #87A7D9 50%, #DEF3F8 100%); */
+  background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
 }
 
+.navbar {
+  /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/*
 .logo {
   height: 6em;
   padding: 1.5em;

@@ -115,12 +115,28 @@ export default async function getWeather(location : LocationData, timesteps : Ti
 export interface WeatherData {
   time: string;
   values: {
-    temperatureAvg?: number;
-    precipitationProbabilityAvg?: number;
-    windSpeedAvg?: number;
     temperature?: number;
+    temperatureAvg?: number;
+    temperatureMin?: number;
+    temperatureMax?: number;
+    humidity?: number;
+    humidityAvg?: number;
+    temperatureApparent?: number;
+    temperatureApparentAvg?: number;
+    uvIndex?: number;
+    uvIndexAvg?: number;
+    uvIndexMax?: number;
+    uvIndexMin?: number;
     precipitationProbability?: number;
+    precipitationProbabilityAvg?: number;
+    pressureSurfaceLevel?: number;
+    pressureSurfaceLevelAvg?: number;
     windSpeed?: number;
+    windSpeedAvg?: number;
+    windDirection?: number;
+    sunriseTime?: string;
+    sunsetTime?: string;
+    
   };
 }
 
