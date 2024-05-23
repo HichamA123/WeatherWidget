@@ -8,74 +8,24 @@ import {
   CardHeader,
   CardBody,
   Stack,
-  StackDivider,
   Spacer,
   Text,
-  Divider,
-  Circle,
   Icon,
-  Center
 } from "@chakra-ui/react";
-import { BiSun, BiMoon, BiCloudRain, BiCloudSnow, BiCloud, BiWind, BiLemon } from "react-icons/bi";
 import { WeatherData } from "../../services/weatherService";
-import { IconType } from "react-icons";
+import { weatherIcon } from "../../utils";
 
 
-enum ForecastType {
+export enum ForecastType {
   hourly = "hourly",
   daily = "daily",
+  realtime = "realtime"
 }
 
+//a scrollable display for the forecasts
 function ForecastDisplay({ hourly, daily, type }: { hourly: WeatherData[], daily: WeatherData[], type: ForecastType }) {
 
   if (!hourly && !daily) return (null);
-
-  console.log(daily);
-
-  const weatherIcon = (record: WeatherData): IconType => {
-    let cloudCover, windSpeed, rainIntensity, snowIntensity, uvIndex;
-
-    if (type === ForecastType.hourly) {
-      ({ cloudCover, windSpeed, rainIntensity, snowIntensity, uvIndex } = record.values);
-    } else if (type === ForecastType.daily) {
-      cloudCover = record.values.cloudCoverAvg;
-      windSpeed = record.values.windSpeedAvg;
-      rainIntensity = record.values.rainIntensityAvg;
-      snowIntensity = record.values.snowIntensityAvg;
-      uvIndex = record.values.uvIndexAvg;
-    } else {
-      console.error("shouldn't be here");
-      return BiLemon;
-    }
-
-    const sunriseTime = daily[0].values.sunriseTime;
-    const sunsetTime = daily[0].values.sunsetTime;
-
-    const currentTime = new Date(record.time);
-    const sunrise = sunriseTime ? new Date(sunriseTime) : null;
-    const sunset = sunsetTime ? new Date(sunsetTime) : null;
-
-    const getTimeOnly = (date: Date | null): string | null => {
-      return date ? date.toTimeString().split(' ')[0] : null;
-    };
-
-    const currentTimeString = getTimeOnly(currentTime);
-    const sunriseTimeString = getTimeOnly(sunrise);
-    const sunsetTimeString = getTimeOnly(sunset);
-
-    const isDaytime = sunriseTimeString && sunsetTimeString && currentTimeString
-      ? (currentTimeString > sunriseTimeString && currentTimeString < sunsetTimeString)
-      : true;
-
-    // Determine the weather mood based on the extracted data
-    if (rainIntensity && rainIntensity > 5) return BiCloudRain; // mm/hour
-    if (!isDaytime) return BiMoon; // Before sunrise or after sunset, return moon icon
-    if (snowIntensity && snowIntensity > 1) return BiCloudSnow; // mm/hour
-    if (cloudCover && cloudCover > 80) return BiCloud; // %
-    if (windSpeed && windSpeed > 25) return BiWind; // m/s
-    if (uvIndex && uvIndex > 4) return BiSun; // > 5 = a lot of sun
-    return BiSun; // Default to sun icon if no other conditions are met
-  };
 
   //returns date like 23/5 and 25/6
   function getFormattedDate(dateString: string): string {
@@ -124,6 +74,7 @@ function ForecastDisplay({ hourly, daily, type }: { hourly: WeatherData[], daily
     return [];
   };
 
+  //data is now set to the data according to the initialized type of this component
   const data = slicedData();
 
   return (
@@ -154,7 +105,7 @@ function ForecastDisplay({ hourly, daily, type }: { hourly: WeatherData[], daily
                 {Math.round(item.values.temperature ?? 0)}<Text as="sup">&deg;C</Text>
               </Heading>
             )}
-            <Icon as={weatherIcon(item)} boxSize={8} my={7} />
+            <Icon as={weatherIcon(item, type, daily[0].values.sunriseTime?? null, daily[0].values.sunsetTime ?? null)} boxSize={8} my={7} />
 
             <Text fontSize="xs">
               {Math.round(type === ForecastType.daily ? item.values.windSpeedAvg ?? 0 : item.values.windSpeed ?? 0)} km/h

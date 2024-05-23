@@ -18,6 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
 import { BiSun, BiMoon } from "react-icons/bi";
+import { weatherIcon } from "../../utils";
+import { ForecastType } from "./Forecast";
 
 
 function Sun({ rise, set }: { rise: string; set: string; }) {
@@ -54,7 +56,7 @@ function Sun({ rise, set }: { rise: string; set: string; }) {
   );
 }
 
-function Temperature({ realTimeData, tempMin, tempMax }: { realTimeData: any; tempMin: number; tempMax: number; }) {
+function Temperature({ realTimeData, tempMin, tempMax, sunriseTime, sunsetTime }: { realTimeData: any; tempMin: number; tempMax: number; sunriseTime: string|null, sunsetTime: string|null }) {
 
   const weatherMood = (data: any): string => {
     // Extract relevant data from realTimeData
@@ -75,13 +77,17 @@ function Temperature({ realTimeData, tempMin, tempMax }: { realTimeData: any; te
   }
 
   return (
-    <Card w="100%" alignItems='center' bgColor="rgba(0, 0, 0, 0.05)" color="white">
+    <Card w="100%" alignItems='center' bgColor="rgba(0, 0, 0, 0.1)" color="white">
       <CardHeader>
-        <Heading fontSize="xxx-large" ml={5}>{realTimeData.temperature}
+        <Heading fontSize="5rem" ml={5}>{Math.round(realTimeData.temperature)}
           <Text as="sup">&deg;C</Text>
         </Heading>
+        <Flex alignItems='center' justifyContent='center' mt={5}>
+          <Icon as={weatherIcon(realTimeData, ForecastType.realtime, sunriseTime, sunsetTime)} boxSize={14} />
+        </Flex>
       </CardHeader>
       <CardBody w="100%">
+        
         <Flex alignItems='center'>
           <Spacer />
           <Heading fontSize='xx-large'>{weatherMood(realTimeData)}</Heading>
@@ -217,9 +223,16 @@ function Realtime({ }: RealtimetProps) {
   }
 
   // Render real-time weather information
+  //dailyData.find(() => true picks the first element in array
   return (
     <>
-      <Temperature realTimeData={realTimeData?.values ?? {}} tempMin={dailyData.find(() => true)?.values?.temperatureMin ?? 0} tempMax={dailyData.find(() => true)?.values?.temperatureMax ?? 0} />
+      <Temperature 
+      realTimeData={realTimeData?.values ?? {}} 
+      tempMin={dailyData.find(() => true)?.values?.temperatureMin ?? 0} 
+      tempMax={dailyData.find(() => true)?.values?.temperatureMax ?? 0}
+      sunriseTime={dailyData.find(() => true)?.values?.sunriseTime ?? null}
+      sunsetTime={dailyData.find(() => true)?.values?.sunsetTime ?? null}
+      />
 
       <Flex w='100%' gap='5'>
         <Flex flexDir='column' w="50%" gap={3}>
