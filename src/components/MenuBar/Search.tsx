@@ -8,7 +8,9 @@ import {
   Button,
   Box,
   Flex,
-  Kbd
+  Kbd,
+  Heading,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/react";
 import { BiMap, BiSearchAlt } from "react-icons/bi";
@@ -26,6 +28,9 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
   const [searchInput, setSearchInput] = useState("Amsterdam, Netherlands");
   const toast = useToast();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const showComponent = useBreakpointValue({base: false, lg: true});
+  const showShortcut = useBreakpointValue({base: false, md: true});
 
   async function click() {
     if (searchInput == '' || searchInput == null) {
@@ -75,12 +80,12 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
 
   return (
     <>
-      <p>
+      {showComponent && <Heading size={'xs'}>
         Last updated:{" "}
         {lastCalled ? new Date(lastCalled).toLocaleTimeString() : "Never"}
-      </p>
-      {/* <p>{location.address}</p> */}
-      <Flex w={'50%'} alignItems={'center'} minW='400px'>
+      </Heading>}
+
+      <Flex w={{base: '90%', lg: '50%'}} alignItems={'center'}>
         <InputGroup size='lg' >
           <InputLeftElement pointerEvents="none">
             <Icon as={BiMap} boxSize={6} color='blue.600' />
@@ -97,13 +102,15 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
               if (e.key === 'Enter') click();
             }}
           />
-          <InputRightElement mr={6}>
+
+          {showShortcut && <InputRightElement mr={6}>
             <Kbd fontSize='medium' fontWeight='bold' mx={1}>⌘</Kbd> + <Kbd fontSize='medium' fontWeight='bold' mx={1}>K</Kbd>
-          </InputRightElement>
+          </InputRightElement>}
+
         </InputGroup>
       </Flex>
 
-      <IconButton
+      {showComponent && <IconButton
         variant={"outline"}
         borderWidth={2}
         fontSize='22px'
@@ -113,7 +120,7 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
         icon={<BiSearchAlt />}
         isLoading={isLocalLoading}
         isDisabled={loading}
-      />
+      />}
     </>
   );
 }

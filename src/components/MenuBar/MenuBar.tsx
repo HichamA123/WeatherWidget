@@ -122,19 +122,19 @@ export default function MenuBar() {
   }
 
   return (
-    <Flex w='99%'  borderColor={'white'} borderRadius='lg' mt='2' p='3'  alignItems='center' gap='5' className="navbar">
+    <Flex w='96%' flexDir={{base: 'column', md: 'row'}} boxShadow='xl' borderColor={'white'} borderRadius='lg' mt='2' p='3'  alignItems='center' gap={{base: 2, md: 5}} bgColor='rgba(255, 255, 255, 0.8)'>
       <Flex p='2' flexDirection='row' justifyContent='center' alignItems='center'>
         <Icon as={BiLemon} boxSize={7} mr={3} />
         <Heading size='md'>LemonWeather</Heading>
       </Flex>
       <Spacer />
       <Search isApiOverloaded={isApiOverloaded} validateLocation={validateLocation} />
-
       <Spacer />
-      <ButtonGroup mx='5'>
+      <ButtonGroup>
       <MyLocation isApiOverloaded={isApiOverloaded} validateLocation={validateLocation} />
       <Refresh isApiOverloaded={isApiOverloaded} />
       </ButtonGroup>
+      <Spacer />
     </Flex>
   );
 }
