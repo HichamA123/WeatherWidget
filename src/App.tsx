@@ -14,7 +14,7 @@ function App() {
 
   return (
     <WeatherProvider>
-      <Flex w='100vw' flexDirection='column' alignItems='center'>
+      <Flex w='100vw' minH='100vh' flexDirection='column' alignItems='center'>
         <MenuBar/>
         <WeatherDashboard />
       </Flex>

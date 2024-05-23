@@ -30,7 +30,7 @@ function Sun({ rise, set }: { rise: string; set: string; }) {
   return (
     <Card w="100%" h="50%" bgColor="rgba(0, 0, 0, 0.05)" color="white">
       <CardHeader>
-        <Heading size='md'>Day & Night</Heading>
+        <Heading size='md'>Day & night</Heading>
       </CardHeader>
       <CardBody w="100%" color="rgba(255, 255, 255, 0.7)">
         <Stack>

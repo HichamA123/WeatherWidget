@@ -115,6 +115,9 @@ export default async function getWeather(location : LocationData, timesteps : Ti
 export interface WeatherData {
   time: string;
   values: {
+    cloudCover?: number;
+    cloudCoverAvg?: number;
+    visibility?: number;
     temperature?: number;
     temperatureAvg?: number;
     temperatureMin?: number;
@@ -131,6 +134,11 @@ export interface WeatherData {
     precipitationProbabilityAvg?: number;
     pressureSurfaceLevel?: number;
     pressureSurfaceLevelAvg?: number;
+    rainIntensity?: number;
+    rainIntensityAvg?: number;
+    snowIntensity?: number;
+    snowIntensityAvg?: number;
+    sleetIntensity?: number;
     windSpeed?: number;
     windSpeedAvg?: number;
     windDirection?: number;
