@@ -14,11 +14,11 @@ function WeatherDashboard() {
   }, []);
 
   return (
-    <Flex w='97%' mt='4' p='3' alignItems='flex-start' gap='6' h="100%">
-      <Flex flexDir='column' w='50%' gap='5'>
+    <Flex w='97%' mt='4' p='3' alignItems='flex-start' gap='6' h="100%" flexDir={{base: 'column', lg: 'row'}}>
+      <Flex flexDir='column' w={{base: '100%', lg: '50%'}} gap='5'>
         <Realtime />
       </Flex>
-      <Flex flexDir='column' w='50%' gap='5'>
+      <Flex flexDir='column' w={{base: '100%', lg: '50%'}}  gap='5'>
         <Forecast />
       </Flex>
     </Flex>

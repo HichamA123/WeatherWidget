@@ -39,14 +39,14 @@ function Sun({ rise, set }: { rise: string; set: string; }) {
           <Flex flexDir='row' alignItems='center' w="100%">
             <Icon as={BiSun} boxSize={8} />
             <Spacer />
-            <Heading mr={2}  >{parseTime(rise)}</Heading>
+            <Heading mr={2} size={['md', null, null, 'md', 'lg', 'xl']} >{parseTime(rise)}</Heading>
             <Text fontSize='lg'>Sunrise</Text>
             <Spacer />
           </Flex>
           <Flex flexDir='row' alignItems='center' mt={2} w="100%">
             <Icon as={BiMoon} boxSize={8} />
             <Spacer />
-            <Heading mr={2}>{parseTime(set)}</Heading>
+            <Heading mr={2} size={['md', null, null, 'md', 'lg', 'xl']} >{parseTime(set)}</Heading>
             <Text fontSize='lg'>Sunset</Text>
             <Spacer />
           </Flex>
@@ -182,7 +182,7 @@ function Statistics({realTimeData} : {realTimeData: any;}) {
   ];
 
   return (
-    <Card w="50%" textAlign='left' bgColor='rgba(0, 0, 0, 0.05)' color='white'>
+    <Card w={{base: '100%', sm: '50%'}} textAlign='left' bgColor='rgba(0, 0, 0, 0.05)' color='white'>
           <CardHeader>
             <Heading size='md'>Statistics</Heading>
           </CardHeader>
@@ -234,8 +234,8 @@ function Realtime({ }: RealtimetProps) {
       sunsetTime={dailyData.find(() => true)?.values?.sunsetTime ?? null}
       />
 
-      <Flex w='100%' gap='5'>
-        <Flex flexDir='column' w="50%" gap={3}>
+      <Flex w='100%' gap='5' flexDir={{base: 'column', sm: 'row'}}>
+        <Flex flexDir='column' w={{base: '100%', sm: '50%'}} gap={3}>
           <CompassCard degrees={realTimeData?.values?.windDirection ?? 0} speed={realTimeData?.values?.windSpeed ?? 0} />
           <Spacer />
           <Sun rise={dailyData.find(() => true)?.values?.sunriseTime ?? "0"} set={dailyData.find(() => true)?.values?.sunsetTime ?? "0"} />
