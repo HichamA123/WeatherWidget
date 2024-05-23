@@ -1,3 +1,9 @@
+# Setup
+
+Create a .env file and paste in the credentials.
+Run `yarn install` then `yarn dev`
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
