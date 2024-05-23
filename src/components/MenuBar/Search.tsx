@@ -7,6 +7,8 @@ import {
   useToast,
   Button,
   Box,
+  Flex,
+  Kbd
 } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/react";
 import { BiMap, BiSearchAlt } from "react-icons/bi";
@@ -77,42 +79,41 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
         Last updated:{" "}
         {lastCalled ? new Date(lastCalled).toLocaleTimeString() : "Never"}
       </p>
-      <p>{location.address}</p>
-      <InputGroup>
-        <InputLeftElement pointerEvents="none">
-          <Icon as={BiMap} color="gray.300" boxSize={5} />
-        </InputLeftElement>
-        <Input
-          ref={inputRef}
-          type="text"
-          variant="outline"
-          placeholder="Search a location"
-          onChange={(e) => setSearchInput(e.target.value)}
-          value={searchInput}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') click();
-          }}
-        />
-        <InputRightElement>
-        {/* <Button h='1.75rem' size='sm'>
-          {'Show'}
-        </Button> */}
-
-        <Box h='1.75rem' bg='gray.100' w='100%' fontWeight={'bold'} borderRadius={5}>
-          CK
-        </Box>
-          <IconButton
-            variant={"outline"}
-            borderWidth={2}
-            onClick={() => click()}
+      {/* <p>{location.address}</p> */}
+      <Flex w={'50%'} alignItems={'center'} minW='400px'>
+        <InputGroup size='lg' >
+          <InputLeftElement pointerEvents="none">
+            <Icon as={BiMap} boxSize={6} />
+          </InputLeftElement>
+          <Input
+            ref={inputRef}
+            type="text"
+            variant="outline"
+            placeholder="Search a location"
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={searchInput}
             colorScheme="blue"
-            aria-label="Search location"
-            icon={<BiSearchAlt />}
-            isLoading={isLocalLoading}
-            isDisabled={loading}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') click();
+            }}
           />
-        </InputRightElement>
-      </InputGroup>
+          <InputRightElement mr={6}>
+            <Kbd fontSize='medium' fontWeight='bold' mx={1}>⌘</Kbd> + <Kbd fontSize='medium' fontWeight='bold' mx={1}>K</Kbd>
+          </InputRightElement>
+        </InputGroup>
+      </Flex>
+
+      <IconButton
+        variant={"outline"}
+        borderWidth={2}
+        fontSize='22px'
+        onClick={() => click()}
+        colorScheme="blue"
+        aria-label="Search location"
+        icon={<BiSearchAlt />}
+        isLoading={isLocalLoading}
+        isDisabled={loading}
+      />
     </>
   );
 }

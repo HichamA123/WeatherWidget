@@ -5,21 +5,20 @@ import "./App.css";
 import WeatherDashboard from "./components/WeatherDashboard";
 import { WeatherProvider } from "./components/WeatherContext";
 import MenuBar from "./components/MenuBar/MenuBar";
+import {
+  Flex,
+} from "@chakra-ui/react";
+
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  function meth() {
-    setCount((count) => count + 1);
-    console.log("SFSF");
-  }
 
   return (
     <WeatherProvider>
-      <MenuBar/>
-      <div>
+      <Flex w='100vw' flexDirection='column' alignItems='center'>
+        <MenuBar/>
         <WeatherDashboard />
-      </div>
+      </Flex>
+
       {/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />

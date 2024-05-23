@@ -1,13 +1,15 @@
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
+  Box,
   Button,
   useToast,
+  Flex,
+  Heading,
+  Spacer,
+  ButtonGroup
 } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/react";
-import { BiAccessibility } from "react-icons/bi";
+import { BiLemon } from "react-icons/bi";
+import { } from "react-icons/bi";
 import { useWeatherContext } from "../WeatherContext";
 import { } from "react";
 import { timeoutIsDone, TIMEOUT_MINUTES } from "../../utils";
@@ -120,20 +122,19 @@ export default function MenuBar() {
   }
 
   return (
-    <Menu>
+    <Flex w='99%' borderWidth='1px' borderRadius='lg' mt='2' p='3'  alignItems='center' gap='5'>
+      <Flex p='2' flexDirection='row' justifyContent='center' alignItems='center'>
+        <Icon as={BiLemon} boxSize={7} mr={3} />
+        <Heading size='md'>MyWeather</Heading>
+      </Flex>
+      <Spacer />
       <Search isApiOverloaded={isApiOverloaded} validateLocation={validateLocation} />
+
+      <Spacer />
+      <ButtonGroup mx='5'>
       <MyLocation isApiOverloaded={isApiOverloaded} validateLocation={validateLocation} />
       <Refresh isApiOverloaded={isApiOverloaded} />
-      <MenuButton as={Button} rightIcon={<Icon as={BiAccessibility} />}>
-        Actions
-      </MenuButton>
-      <MenuList>
-        <MenuItem>Download</MenuItem>
-        <MenuItem>Create a Copy</MenuItem>
-        <MenuItem>Mark as Draft</MenuItem>
-        <MenuItem>Delete</MenuItem>
-        <MenuItem>Attend a Workshop</MenuItem>
-      </MenuList>
-    </Menu>
+      </ButtonGroup>
+    </Flex>
   );
 }

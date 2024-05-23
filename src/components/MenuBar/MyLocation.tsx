@@ -63,6 +63,7 @@ export default function MyLocation({ isApiOverloaded, validateLocation }: MyLoca
       <IconButton
         variant="outline"
         borderWidth={2}
+        fontSize='22px'
         onClick={click}
         colorScheme="blue"
         aria-label="My Location"

@@ -32,6 +32,7 @@ export default function Refresh({ isApiOverloaded }: RefreshProps) {
             <IconButton
                 variant="outline"
                 borderWidth={2}
+                fontSize='22px'
                 onClick={click}
                 colorScheme="blue"
                 aria-label="Refresh weather data"
