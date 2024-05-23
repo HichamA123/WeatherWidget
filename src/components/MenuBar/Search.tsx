@@ -83,7 +83,7 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
       <Flex w={'50%'} alignItems={'center'} minW='400px'>
         <InputGroup size='lg' >
           <InputLeftElement pointerEvents="none">
-            <Icon as={BiMap} boxSize={6} />
+            <Icon as={BiMap} boxSize={6} color='blue.600' />
           </InputLeftElement>
           <Input
             ref={inputRef}

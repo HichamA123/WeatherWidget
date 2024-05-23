@@ -8,14 +8,11 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 
-interface XDayForecastProps { }
 
-//   {data, loading}: {data: WeatherData[], loading: Boolean}
-function XDayForecast({ }: XDayForecastProps) {
-  const { dailyData, loading } = useWeatherContext();
+function XHourForecast({ }) {
+  const { hourlyData, loading } = useWeatherContext();
 
   useEffect(() => {
-
   }, []);
 
   if (loading) {
@@ -24,19 +21,20 @@ function XDayForecast({ }: XDayForecastProps) {
 
   return (
     <>
-      <Heading>5-Day Weather Forecast</Heading>
+      <Heading>24-Hour Forecast</Heading>
+
       <Box border='1px' borderRadius='md'>
         <UnorderedList>
-          {dailyData && dailyData.map((day: any) => {
+          {hourlyData && hourlyData.map((day: any) => {
             return (
               <ListItem key={day.time}>
                 <p>Date: {new Date(day.time).toDateString()}</p>
-                <p>Average Temperature: {day.values.temperatureAvg}°C</p>
+                <p>Temperature: {day.values.temperature}°C</p>
                 <p>
                   Precipitation Probability:{" "}
-                  {day.values.precipitationProbabilityAvg}%
+                  {day.values.precipitationProbability}%
                 </p>
-                <p>Average Wind Speed: {day.values.windSpeedAvg} m/s</p>
+                <p>Wind Speed: {day.values.windSpeed} m/s</p>
               </ListItem>
             )
           })}
@@ -50,4 +48,4 @@ function XDayForecast({ }: XDayForecastProps) {
   );
 }
 
-export default XDayForecast;
+export default XHourForecast;
