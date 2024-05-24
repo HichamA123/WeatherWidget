@@ -22,8 +22,10 @@ import { weatherIcon } from "../../utils";
 import { ForecastType } from "./Forecast";
 
 
+//day & night card
 function Sun({ rise, set }: { rise: string; set: string; }) {
 
+  // gets the time from a data with time
   const parseTime = (timeString: string): string => {
     const date = new Date(timeString);
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -56,8 +58,10 @@ function Sun({ rise, set }: { rise: string; set: string; }) {
   );
 }
 
+// big main card
 function Temperature({ realTimeData, tempMin, tempMax, sunriseTime, sunsetTime }: { realTimeData: any; tempMin: number; tempMax: number; sunriseTime: string|null, sunsetTime: string|null }) {
 
+  //returns a mood type string depending on the weather
   const weatherMood = (data: any): string => {
     // Extract relevant data from realTimeData
     const { cloudCover, visibility, windSpeed, rainIntensity, snowIntensity, sleetIntensity, uvIndex } = data;
@@ -72,12 +76,13 @@ function Temperature({ realTimeData, tempMin, tempMax, sunriseTime, sunsetTime }
     else return "Clear";
   };
 
+  // safety
   if (!realTimeData) {
     return null;
   }
 
   return (
-    <Card w="100%" alignItems='center' bgColor="rgba(0, 0, 0, 0.1)" color="white">
+    <Card w="100%" alignItems='center' bgColor="rgba(0, 0, 0, 0.2)" color="white">
       <CardHeader>
         <Heading fontSize="5rem" ml={5}>{Math.round(realTimeData.temperature)}
           <Text as="sup">&deg;C</Text>
@@ -104,6 +109,7 @@ function CompassCard({ degrees, speed }: { degrees: number; speed: number; }) {
 
   const COMPASS_SIZE = '70px';
 
+  // text of where the wind comes from
   const getDirection = (degrees: number) => {
     const oppositeDegrees = (degrees + 180) % 360;
 
@@ -170,8 +176,10 @@ function CompassCard({ degrees, speed }: { degrees: number; speed: number; }) {
   );
 }
 
+// a bit of useful data to show about current weather
 function Statistics({realTimeData} : {realTimeData: any;}) {
-
+  
+  // simply pull out the data and display it in the return
   const real = realTimeData;
   const weatherData = [
     { name: 'Humidity', value: real.humidity, extension: '%' },
@@ -218,6 +226,7 @@ function Realtime({ }: RealtimetProps) {
   useEffect(() => {
   }, []);
 
+  // this needs to be beautified/styled ;)
   if (loading) {
     return <div>Loading...</div>;
   }

@@ -17,20 +17,20 @@ export default function MyLocation({ isApiOverloaded, validateLocation }: MyLoca
   const toast = useToast();
 
   // Fetch current location using browser location services and set it in the search input
-  // Then call search to validate location and update weather data
+  // Then call search to validate location and it automatically updates weather data bcs the location got updated (there is a useffect on location)
   async function click() {
     if (isApiOverloaded()) return;
     setIsLocalLoading(true);
 
     try {
-      if (navigator.geolocation) {
+      if (navigator.geolocation) { // uses browser gps feature (can be rejected by user)
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
             await validateLocation(undefined, latitude, longitude); // to validate and update weather data
             setIsLocalLoading(false);
           },
-          (error) => {
+          (error) => { // rejected by user
             console.error(error);
             toast({
               title: "Error fetching location",
@@ -42,7 +42,7 @@ export default function MyLocation({ isApiOverloaded, validateLocation }: MyLoca
             setIsLocalLoading(false);
           }
         );
-      } else {
+      } else { // if this feature is not availabe in the browser
         toast({
           title: "Geolocation not supported",
           description: "Your browser does not support geolocation.",

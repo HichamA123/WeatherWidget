@@ -16,8 +16,10 @@ interface WeatherContextType {
   updateLocation: (param: LocationData) => void;
 }
 
+// the context used by the entire app (no need for seperating into multiple contexts)
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
 
+// this method is used globally to save code
 export function useWeatherContext() {
   const context = useContext(WeatherContext);
   if (!context) {
@@ -27,10 +29,15 @@ export function useWeatherContext() {
 }
 
 export function WeatherProvider({ children }: { children: any }) {
+  // loading state when fetching data from api's
   const [loading, setLoading] = useState<boolean>(false);
+  // daily data from weather api
   const [dailyData, setDailyData] = useState<WeatherData[]>([]);
+  // hourly data from weather api
   const [hourlyData, setHourlyData] = useState<WeatherData[]>([]);
+  // hourly data from weather api
   const [realTimeData, setRealtimeData] = useState<WeatherData | null>(null);
+  // to display succes or error messages when fetching from weather api
   const toast = useToast();
   const defaultLocation: LocationData = { //is used by default if nothing is cached in the cookies
     address: 'Amsterdam, Netherlands',
@@ -40,8 +47,10 @@ export function WeatherProvider({ children }: { children: any }) {
 
   //cached in browser cookies
   const [location, setLocation] = useState<LocationData>(defaultLocation);
+  // is used to throttle the weather api calling, i have limited use on the api ;)
   const [lastCalled, setLastCalled] = useState<number | null>(null);
 
+  // fetches the data from weather api and sets in the correct state
   const updateWeatherData = async () => {
 
     return new Promise<void>(async (resolve, reject) => {
@@ -74,6 +83,7 @@ export function WeatherProvider({ children }: { children: any }) {
         )) as WeatherData[];
 
         setHourlyData(response);
+
         // realtime data
         response = (await getWeather(location, TimeStep.Realtime)) as WeatherData;
 
@@ -87,7 +97,7 @@ export function WeatherProvider({ children }: { children: any }) {
           isClosable: true,
         });
 
-        resolve();
+        resolve(); // somehow the finally block still gets called...
       } catch (error) {
         console.error("Error fetching weather data:", error);
 
@@ -121,7 +131,7 @@ export function WeatherProvider({ children }: { children: any }) {
   }
 
   //init
-  useEffect(() => {
+  useEffect(() => { // fetch and set the cookies values if they exist
     const lastCalledFromCookie = Cookies.get("lastCalled");
     const locationFromCookie = Cookies.get("location");
 
@@ -142,6 +152,7 @@ export function WeatherProvider({ children }: { children: any }) {
 
 
   // Call when lastCalled is updated or when location is updated
+  // everytime location gets updated, this will be called
   useEffect(() => {
     if (lastCalled !== null) {
       updateWeatherData();
@@ -150,6 +161,7 @@ export function WeatherProvider({ children }: { children: any }) {
 
   return (
     <WeatherContext.Provider
+    //passing all the state values and relevant methods to context for use globally
       value={{ dailyData, hourlyData, realTimeData, location, loading, lastCalled, updateLoading, updateWeatherData, updateLocation }}
     >
       {children}

@@ -29,11 +29,13 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
   const toast = useToast();
   const inputRef = useRef<HTMLInputElement>(null);
 
+  //used for responsive conditional showing of specific elements
   const showComponent = useBreakpointValue({base: false, lg: true});
   const showShortcut = useBreakpointValue({base: false, md: true});
 
+  //starts search
   async function click() {
-    if (searchInput == '' || searchInput == null) {
+    if (searchInput == '' || searchInput == null) { //safety check
       toast({
         title: `No location specified`,
         description: "Please type in a location (for eg. Amsterdam, New York)",
@@ -45,18 +47,18 @@ export default function Search({ isApiOverloaded, validateLocation }: SearchProp
       return;
     }
 
-    if (isApiOverloaded()) return;
+    if (isApiOverloaded()) return; // safety check
 
     setIsLocalLoading(true);
 
     const validLocation = await validateLocation(searchInput);
-    if (!validLocation) setSearchInput("");
+    if (!validLocation) setSearchInput(""); // if not a valid location, clear input
 
     setIsLocalLoading(false);
   }
 
   useEffect(() => {
-    setSearchInput(location.address);
+    setSearchInput(location.address); //if location is updated in context, update the location in searchinput
   }, [location]);
 
   //shortcut for selecting the searchbar to start typing

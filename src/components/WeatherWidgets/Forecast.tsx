@@ -36,7 +36,7 @@ function ForecastDisplay({ hourly, daily, type }: { hourly: WeatherData[], daily
   }
 
 
-  //returns a short label for time or the day of the week
+  //returns a short label for time or the day of the week if day-forecast 'monday' 'tuesday' if hourly-forecast '04:00' '05:00'
   function getTimeLabel(dateString: string): string {
     const date = new Date(dateString);
 
@@ -56,12 +56,13 @@ function ForecastDisplay({ hourly, daily, type }: { hourly: WeatherData[], daily
   }
 
 
-  //returns index based on current hour
+  //returns index based on current hour (so the list starts from current hour instead of a random hour)
   const getCurrentHourIndex = (): number => {
     const currentHour = new Date().getUTCHours();
     return hourly.findIndex(item => new Date(item.time).getUTCHours() === currentHour);
   };
 
+  // slices so the daya is 5 days when day forecast else if it is a 24 hour forecast then it will give back max 24 hours in array
   const slicedData = () => {
     if (type === ForecastType.hourly && hourly) {
       const currentHourIndex = getCurrentHourIndex();
@@ -132,6 +133,7 @@ function Forecast({ }: ForecastProps) {
   useEffect(() => {
   }, []);
 
+  // this needs to be beautified/styled ;)
   if (loading) {
     return <div>Loading...</div>;
   }

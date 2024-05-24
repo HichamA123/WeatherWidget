@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import Realtime from "./WeatherWidgets/Realtime";
 import Forecast from "./WeatherWidgets/Forecast";
+import { Flex } from "@chakra-ui/react";
 
-import {
-  Box,
-  Flex,
-} from "@chakra-ui/react";
 
+// displays all the blocks/cards to show weather data
 function WeatherDashboard() {
 
   useEffect(() => {

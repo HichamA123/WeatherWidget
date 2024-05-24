@@ -1,6 +1,4 @@
 import {
-  Box,
-  Button,
   useToast,
   Flex,
   Heading,
@@ -96,6 +94,7 @@ export default function MenuBar() {
 
   }
 
+  // is used by the child components. throttles the api calls (timeout setting is set in utils)
   function isApiOverloaded() {
     //safety prevention for hitting the tomorrow.io api limit
     if (lastCalled && !timeoutIsDone(lastCalled)) {

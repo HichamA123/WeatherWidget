@@ -2,8 +2,10 @@
 import axios from "axios";
 import {getForecastDailyData, getForecastHourlyData, getRealtimeData} from "./data";
 
+// credentials
 const API_KEY = import.meta.env.VITE_TOMORROWIO_API_KEY;
 const BASE_URL = "https://api.tomorrow.io/v4/weather/forecast";
+
 
 export enum TimeStep {
   OneDay = "1d",
@@ -11,6 +13,7 @@ export enum TimeStep {
   Realtime = "realtime"
 }
 
+//response interfaces (could be written better)
 interface DailyWeatherResponse {
   timelines: {
     daily: Array < {
@@ -48,9 +51,11 @@ interface RealtimeWeatherResponse {
   };
 }
 
+// returns the parameters
 function getParams(location : string, timesteps : TimeStep) {
   let fields: string[];
 
+  //TODO specify all the necessary fields here
   switch (timesteps) {
     case TimeStep.OneDay:
       fields = ["temperatureAvg", "precipitationProbabilityAvg", "windSpeedAvg"];
@@ -65,6 +70,7 @@ function getParams(location : string, timesteps : TimeStep) {
       throw new Error("Invalid forecast type");
   }
 
+  //TODO check if the starttime is valid or not
   return {
     location,
     fields,
@@ -81,6 +87,8 @@ function getParams(location : string, timesteps : TimeStep) {
   };
 }
 
+
+// calls the api to fetch weather data based on timestep (realtime, daily, hourly) and the location
 export default async function getWeather(location : LocationData, timesteps : TimeStep): Promise<WeatherData[] | WeatherData> {
   const params = getParams(`${location.lat}, ${location.lng}`, timesteps);
 
@@ -112,6 +120,8 @@ export default async function getWeather(location : LocationData, timesteps : Ti
 
 }
 
+
+// all the properties that we can receive from the api
 export interface WeatherData {
   time: string;
   values: {
@@ -148,6 +158,7 @@ export interface WeatherData {
   };
 }
 
+// is used to store location data according a format
 export interface LocationData {
   address: string; // NOTE: do not use address for fetching tomorrow api data. only lat and lng
   lat: number;

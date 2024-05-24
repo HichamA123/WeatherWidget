@@ -1,7 +1,11 @@
 import axios from "axios";
 
+//credentials
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
+// this function is used to verify the typed location is valid
+//returns location containing the latitude and longitute
+// accepts latitude and longitude bcs the browser gps only gives that and no address
 export async function getLocation(location?: string, lat?: number, lng?: number): Promise<any> {
   return new Promise(async (resolve, reject) => {
     if (!location && (lat == undefined || lng == undefined)) {

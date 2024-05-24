@@ -17,11 +17,12 @@ export default function Refresh({ isApiOverloaded }: RefreshProps) {
         setIsLocalLoading(true);
 
         try {
-            await updateWeatherData();
+            await updateWeatherData(); // no need to validate (validateLocation in parent) location, we can directly call updateWeatherData
+            // also no need for toast because it gets called on succeful fetch in the updateweatherdata
         } catch (error) {
             // catches any errors from the axios call
             console.error(error);
-        } finally {
+        } finally { // finally set loading back to false
             updateLoading(false);
             setIsLocalLoading(false);
         }

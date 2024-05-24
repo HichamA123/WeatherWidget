@@ -1,3 +1,5 @@
+//temp data for use in dev
+
 export const forecastDaily: Object = {
     "timelines": {
       "daily": [
@@ -1708,7 +1710,7 @@ export const realtime = {
 
 function getData(data: any) {
     return new Promise((resolve, reject) => {
-        setTimeout(() => {
+        setTimeout(() => { // fake delay
             resolve(data);
         }, 100);
     })
