@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import MenuBar from '../components/MenuBar/MenuBar';
 
+//TODO finish testing menubar
 describe('MenuBar component', () => {
   it('renders without crashing', () => {
     render(<MenuBar />);
