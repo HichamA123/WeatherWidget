@@ -4,7 +4,7 @@ import {getForecastDailyData, getForecastHourlyData, getRealtimeData} from "./da
 
 // credentials
 const API_KEY = import.meta.env.VITE_TOMORROWIO_API_KEY;
-const BASE_URL = "https://api.tomorrow.io/v4/weather/forecast";
+const BASE_URL = "https://api.tomorrow.io/v4/weather/";
 
 
 export enum TimeStep {
@@ -70,21 +70,22 @@ function getParams(location : string, timesteps : TimeStep) {
       throw new Error("Invalid forecast type");
   }
 
-  //TODO check if the starttime is valid or not
-  return {
+  // https://api.tomorrow.io/v4/weather/realtime?location=52.3613163,+4.841484599999999&units=metric&apikey=
+  const params = {
     location,
-    fields,
+    // fields,
     units: "metric",
-    timesteps: timesteps === "realtime"
-      ? timesteps
-      : "",
-    startTime: new Date().toISOString(),
-    endTime: new Date(new Date().setDate(new Date().getDate() + (
-      timesteps === "1d"
-      ? 5
-      : 1))).toISOString(),
-    apikey: API_KEY
+    apikey: API_KEY,
+    ...(timesteps !== "realtime" && { // realtime timesteps can not have this information in the params (... is spread operator to unpack the obj)
+      timesteps,
+      startTime: new Date().toISOString(),
+      endTime: new Date(new Date().setDate(new Date().getDate() + (
+        timesteps === "1d" ? 5 : 1 // 5 days or 1 day in future
+      ))).toISOString()
+    })
   };
+
+  return params;
 }
 
 
@@ -92,27 +93,30 @@ function getParams(location : string, timesteps : TimeStep) {
 export default async function getWeather(location : LocationData, timesteps : TimeStep): Promise<WeatherData[] | WeatherData> {
   const params = getParams(`${location.lat}, ${location.lng}`, timesteps);
 
-  //TODO use this again
-  // const response = await axios.get<DailyWeatherResponse>(BASE_URL, { params });
-  // const data: WeatherData[] = response.data.timelines.daily;
+  console.log(params);
 
   let data: WeatherData[] = [];
   let response;
 
   switch (timesteps) {
     case TimeStep.OneDay:
-      response = (await getForecastDailyData())as DailyWeatherResponse;
-      data = response.timelines.daily;
+      response = await axios.get<DailyWeatherResponse>(BASE_URL+'forecast', { params });
+      data = response.data.timelines.daily.slice(1);
+
       return data;
 
     case TimeStep.OneHour:
-      response = (await getForecastHourlyData())as HourlyWeatherResponse;
-      data = response.timelines.hourly;
+      response = await axios.get<HourlyWeatherResponse>(BASE_URL+'forecast', { params });
+      data = response.data.timelines.hourly.slice(0, 72); //picked 72 to be safe
       return data;
 
     case TimeStep.Realtime:
-      response = (await getRealtimeData())as RealtimeWeatherResponse;
-      let single: WeatherData = response.data;
+      // response = (await getRealtimeData())as RealtimeWeatherResponse;
+      // let single: WeatherData = response.data;
+
+      response = await axios.get<RealtimeWeatherResponse>(BASE_URL+'realtime', { params });
+      let single: WeatherData = response.data.data;
+
       return single;
     default:
       throw new Error("Invalid forecast type");

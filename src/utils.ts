@@ -13,7 +13,7 @@ export function validVariable(variable : any): boolean {
   }
 }
 
-export const TIMEOUT_MINUTES: number = 0.01;
+export const TIMEOUT_MINUTES: number = 3;
 
 export function timeoutIsDone(lastCalled : number, minutes : number = TIMEOUT_MINUTES): boolean {
   const now = Date.now();
