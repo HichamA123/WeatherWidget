@@ -93,8 +93,6 @@ function getParams(location : string, timesteps : TimeStep) {
 export default async function getWeather(location : LocationData, timesteps : TimeStep): Promise<WeatherData[] | WeatherData> {
   const params = getParams(`${location.lat}, ${location.lng}`, timesteps);
 
-  console.log(params);
-
   let data: WeatherData[] = [];
   let response;
 

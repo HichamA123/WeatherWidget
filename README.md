@@ -2,6 +2,7 @@
 
 Create a .env file and paste in the credentials.
 Run `yarn install` then `yarn dev`
+Do NOT lower the api timeout.
 
 
 # React + TypeScript + Vite
