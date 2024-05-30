@@ -1709,7 +1709,7 @@ export const realtime = {
   };
 
 function getData(data: any) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         setTimeout(() => { // fake delay
             resolve(data);
         }, 100);

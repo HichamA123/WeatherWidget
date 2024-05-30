@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useWeatherContext } from "../WeatherContext";
 import {
-  Box,
   Flex,
   Heading,
   Card,

@@ -1,5 +1,4 @@
 import { IconType } from "react-icons";
-import { WeatherData } from "./services/weatherService";
 import { ForecastType } from "./components/WeatherWidgets/Forecast";
 import { BiSun, BiMoon, BiCloudRain, BiCloudSnow, BiCloud, BiWind, BiLemon } from "react-icons/bi";
 

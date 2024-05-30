@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useWeatherContext } from "../WeatherContext";
 import {
-  Box,
   Flex,
   Heading,
   Card,
@@ -11,7 +10,6 @@ import {
   StackDivider,
   Spacer,
   Text,
-  Divider,
   Circle,
   Icon,
   Center

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {getForecastDailyData, getForecastHourlyData, getRealtimeData} from "./data";
+// import {getForecastDailyData, getForecastHourlyData, getRealtimeData} from "./data";
 
 // credentials
 const API_KEY = import.meta.env.VITE_TOMORROWIO_API_KEY;
@@ -52,18 +52,18 @@ interface RealtimeWeatherResponse {
 
 // returns the parameters
 function getParams(location : string, timesteps : TimeStep) {
-  let fields: string[];
+  // let fields: string[];
 
   //TODO specify all the necessary fields here
   switch (timesteps) {
     case TimeStep.OneDay:
-      fields = ["temperatureAvg", "precipitationProbabilityAvg", "windSpeedAvg"];
+      // fields = ["temperatureAvg", "precipitationProbabilityAvg", "windSpeedAvg"];
       break;
     case TimeStep.OneHour:
-      fields = ["temperature", "precipitationProbability", "windSpeed"];
+      // fields = ["temperature", "precipitationProbability", "windSpeed"];
       break;
     case TimeStep.Realtime:
-      fields = ["temperature", "precipitationProbability", "windSpeed"];
+      // fields = ["temperature", "precipitationProbability", "windSpeed"];
       break;
     default:
       throw new Error("Invalid forecast type");
